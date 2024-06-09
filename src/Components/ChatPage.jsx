@@ -101,12 +101,14 @@ const ChatPage = ({ darkMode, setDarkMode }) => {
   }, []);
   useEffect(() => {
     socket.on("message", (message) => {
+      console.log("Received message:", message.textType); //by adk
       setMessages((prevMessages) => [
         ...prevMessages,
         {
           username: message.username,
           message: message.text,
           createdAt: moment(message.createdAt).format("h:mm a"),
+          textType: message.textType || "user",
         },
       ]);
       scrollToBottom();
@@ -144,6 +146,7 @@ const ChatPage = ({ darkMode, setDarkMode }) => {
     if (message.trim() === "") {
       return;
     }
+    console.log("Sending message:", message); //by adk
     socket.emit("sendMessage", message, (error) => {
       if (error) {
         console.log(error);
@@ -396,6 +399,7 @@ const ChatPage = ({ darkMode, setDarkMode }) => {
                 username={msg.username}
                 createdAt={msg.createdAt}
                 message={msg.message}
+                textType={msg.textType} // by adk
                 isOwnMessage={msg.username === username} //same as above
               />
             )

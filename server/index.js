@@ -62,12 +62,20 @@ io.on("connection", (socket) => {
     }
     socket.join(user.room);
 
-    socket.emit("message", generateMessage(`${user.username}`, "Welcome!"));
+    socket.emit(
+      "message",
+      generateMessage(`${user.username}`, "Welcome!", "system")
+    );
+
     socket.broadcast
       .to(user.room)
       .emit(
         "message",
-        generateMessage(`${user.username}`, `${user.username} has joined!`)
+        generateMessage(
+          `${user.username}`,
+          `${user.username} has joined!`,
+          "system"
+        )
       );
     io.to(user.room).emit("roomData", {
       room: user.room,
@@ -88,7 +96,10 @@ io.on("connection", (socket) => {
       console.warn("Profanity is not allowed!");
       return;
     }
-    io.to(user?.room).emit("message", generateMessage(user.username, message));
+    io.to(user?.room).emit(
+      "message",
+      generateMessage(user.username, message, "user")
+    );
     callback();
   });
 
@@ -127,7 +138,11 @@ io.on("connection", (socket) => {
     if (user) {
       io.to(user.room).emit(
         "message",
-        generateMessage(`${user.username}`, `${user.username} has left!`)
+        generateMessage(
+          `${user.username}`,
+          `${user.username} has left!`,
+          "system"
+        )
       );
       io.to(user.room).emit("roomData", {
         room: user.room,

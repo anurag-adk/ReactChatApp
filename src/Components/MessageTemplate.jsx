@@ -5,12 +5,19 @@ const MessageTemplate = ({
   createdAt,
   message,
   darkMode,
+  textType,
   isOwnMessage,
 }) => {
   const limitedUsername =
     username.length > 10 ? username.slice(0, 10) + "..." : username;
+  let messageClass = "";
+  if (textType === "system") {
+    messageClass = "system";
+  } else {
+    messageClass = isOwnMessage ? "sent" : "received";
+  }
   return (
-    <div className={`message ${isOwnMessage ? "sent" : "received"}`}>
+    <div className={`message ${messageClass}`}>
       <p>
         <span
           className={`${

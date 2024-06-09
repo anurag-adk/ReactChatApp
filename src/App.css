@@ -78,15 +78,23 @@ circle:nth-child(3) {
 }
 
 .sent {
-  align-items: right;
+  align-self: flex-end;
   background-color: #c1e3ff;
   text-align: right;
 }
 
 .received {
-  align-items: right;
+  align-self: flex-start;
   background-color: rgb(230, 230, 230);
   text-align: left;
+}
+
+.system {
+  align-self: center;
+  text-align: center;
+  background-color: #fff4e6;
+  width: 100%;
+  margin: 10px 0;
 }
 
 .message__name {
